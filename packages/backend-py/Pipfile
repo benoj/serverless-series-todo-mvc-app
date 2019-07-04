@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "==19.3b0"
+
+[packages]
+psycopg2-binary = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]
+start = "serverless offline"

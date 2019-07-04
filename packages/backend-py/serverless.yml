@@ -1,0 +1,70 @@
+service: todo-api-python
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: us-east-1
+  environment:
+    DB_HOST: ${env:DB_HOST, 'serverless-series-db.clde4adlxv9d.us-east-1.rds.amazonaws.com'}
+    DB_USER: ${env:DB_USER, 'serverlessseries'}
+    DB_PASS: ${env:DB_PASS, 'Password123'}
+    DB_PORT: 5432
+    DB_NAME: ${env:DB_NAME, 'python_sls'}
+
+custom:
+  pythonRequirements:
+    layer: true
+    dockerizePip: true
+
+functions:
+  create:
+    handler: handler.create
+    events:
+      - http:
+          path: todos
+          method: post
+          cors: true
+  list:
+    handler: handler.list
+    events:
+      - http:
+          path: todos
+          method: get
+          cors: true
+  update:
+    handler: handler.update
+    events:
+      - http:
+          path: todos/{todo_id}
+          method: put
+          cors: true
+          integration: lambda
+          request:
+            paths:
+              todo_id: true
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          path: todos/{todo_id}
+          method: delete
+          cors: true
+          integration: lambda
+          request:
+            paths:
+              todo_id: true
+  get:
+    handler: handler.get
+    events:
+      - http:
+          path: todos/{todo_id}
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            paths:
+              todo_id: true
+
+plugins:
+  - serverless-offline-python
+  - serverless-python-requirements
