@@ -92,4 +92,4 @@ export default class MainSection extends Component {
       </section>
     )
   }
-
+}
