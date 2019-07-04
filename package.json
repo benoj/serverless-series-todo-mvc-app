@@ -5,8 +5,7 @@
   "devDependencies": {
     "lerna": "^3.4.3"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "start": "lerna run start"
   }

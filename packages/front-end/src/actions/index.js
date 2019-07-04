@@ -1,13 +1,14 @@
 import * as types from '../constants/ActionTypes'
 import superagent from 'superagent'
 
-const BASE_URL = 'http://localhost:57602/api/todos/'
+window.BASE_URL = 'http://localhost:57602/api/todos/'
 
 // export const addTodo = text => ({ type: types.ADD_TODO, text })
 export const addTodo = text => {
+  console.log(window.BASE_URL);
   return dispatch => {
     return superagent
-      .post(`${BASE_URL}`)
+      .post(`${window.BASE_URL}`)
       .send({ text: text, completed: false })
       .end((err, res) => dispatch({ type: types.ADD_TODO, id: res.body.id, text: text, completed: false }))
   }
@@ -17,7 +18,7 @@ export const addTodo = text => {
 export const deleteTodo = id => {
   return dispatch => {
     return superagent
-      .delete(`${BASE_URL}${id}`)
+      .delete(`${window.BASE_URL}${id}`)
       .end((err, res) => dispatch({ type: types.DELETE_TODO, id }))
   }
 }
@@ -26,7 +27,7 @@ export const deleteTodo = id => {
 export const editTodo = (id, text) => {
   return dispatch => {
     return superagent
-      .patch(`${BASE_URL}${id}`)
+      .patch(`${window.BASE_URL}${id}`)
       .send({ text: text })
       .end((err, res) => dispatch({ type: types.EDIT_TODO, id: id, text: text }))
   }
@@ -37,7 +38,7 @@ export const editTodo = (id, text) => {
 export const completeTodo = (id, state) => {
   return dispatch => {
     return superagent
-      .patch(`${BASE_URL}${id}`)
+      .patch(`${window.BASE_URL}${id}`)
       .send({ completed: state })
       .end((err, res) => dispatch({ type: types.COMPLETE_TODO, id: id, completed: state }))
   }
@@ -47,7 +48,7 @@ export const completeTodo = (id, state) => {
 export const getTodos = () => {
   return dispatch => {
     return superagent
-        .get(`${BASE_URL}`)
+        .get(`${window.BASE_URL}`)
         .end((err, res) => {
           if (err)
             dispatch({ type: types.GET_TODOS, data: [] })
@@ -65,7 +66,7 @@ export const completeAll = ids => {
     var promises = ids.map(id => {
       return new Promise((resolve, reject) => {
         superagent
-          .patch(`${BASE_URL}${id}`)
+          .patch(`${window.BASE_URL}${id}`)
           .send({ completed: true })
           .end((err, res) => resolve())
       })
@@ -80,7 +81,7 @@ export const clearCompleted = ids => {
     var promises = ids.map(id => {
       return new Promise((resolve, reject) => {
         superagent
-          .delete(`${BASE_URL}${id}`)
+          .delete(`${window.BASE_URL}${id}`)
           .end((err, res) => resolve())
       })
     })
