@@ -5,8 +5,12 @@
   "devDependencies": {
     "lerna": "^3.4.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "knex": "^0.18.2",
+    "pg": "^7.11.0"
+  },
   "scripts": {
-    "start": "lerna run start"
+    "start": "lerna run start",
+    "db:start": "docker-compose up --force-"
   }
 }

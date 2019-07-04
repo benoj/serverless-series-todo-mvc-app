@@ -1,5 +1,4 @@
-service: aws-nodejs # NOTE: update this with your service name
-
+service: todo-example-api-node
 provider:
   name: aws
   runtime: nodejs8.10
