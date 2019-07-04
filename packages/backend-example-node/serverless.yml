@@ -1,14 +1,67 @@
 service: todo-example-api-node
+
+custom:
+    serverless-offline:
+      port: 4000
+    db:
+      dev:
+        DB_HOST: localhost
+        DB_USER: local
+        DB_PASS: password
+        DB_PORT: 542
+        DB_NAME: local
+      prod:
+        DB_HOST: serverless-series-db.clde4adlxv9d.us-east-1.rds.amazonaws.com
+        DB_USER: serverlessseries
+        DB_PASS: Password123
+        DB_PORT: 5432
+        DB_NAME: node_sls
+
+    webpack:
+      webpackConfig: ./webpack.config.js
+      includeModules: true
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
 provider:
   name: aws
+  stage: ${opt:stage, 'dev'}
   runtime: nodejs8.10
   environment:
-    DB_HOST: serverless-series-db.clde4adlxv9d.us-east-1.rds.amazonaws.com
-    DB_USER: serverlessseries
-    DB_PASS: Password123
-    DB_PORT: 5432
-    DB_NAME: node_sls
+    DB_HOST: ${self:custom.db.${self:provider.stage}.DB_HOST}
+    DB_USER: ${self:custom.db.${self:provider.stage}.DB_USER}
+    DB_PASS: ${self:custom.db.${self:provider.stage}.DB_PASS}
+    DB_PORT: ${self:custom.db.${self:provider.stage}.DB_PORT}
+    DB_NAME: ${self:custom.db.${self:provider.stage}.DB_NAME}
 
 functions:
-  hello:
-    handler: handler.ping
+  remove:
+    events:
+      - http:
+          path: /todos/{id}
+          method: delete
+          cors: true
+    handler: src/handlers/remove.handler
+  update:
+    events:
+      - http:
+          path: /todos/{id}
+          method: patch
+          cors: true
+    handler: src/handlers/update.handler
+  create:
+    events:
+      - http:
+          path: /todos
+          method: post
+          cors: true
+    handler: src/handlers/create.handler
+  getAll:
+    events:
+      - http:
+          path: /todos
+          method: get
+          cors: true
+    handler: src/handlers/getAll.handler

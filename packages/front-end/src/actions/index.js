@@ -1,7 +1,7 @@
 import * as types from '../constants/ActionTypes'
 import superagent from 'superagent'
 
-window.BASE_URL = 'http://localhost:57602/api/todos/'
+window.BASE_URL = 'http://localhost:4000/todos/'
 
 // export const addTodo = text => ({ type: types.ADD_TODO, text })
 export const addTodo = text => {

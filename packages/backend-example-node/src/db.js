@@ -1,4 +1,4 @@
-module.exports = require('knex')({
+export const db = require('knex')({
   client: 'pg',
   connection: {
     host : process.env.DB_HOST,
