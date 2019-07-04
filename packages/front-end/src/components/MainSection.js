@@ -21,10 +21,10 @@ export default class MainSection extends Component {
   // Add componentDidMount to load initial state and to update state when message is received from WebSocket
   componentDidMount() {
       this.props.actions.getTodos()
-      
+
       this.connection = new WebSocket('ws://localhost:57602/ws')
-      
-      this.connection.onmessage = evt => { 
+
+      this.connection.onmessage = evt => {
         this.props.actions.getTodos()
       }
   }
@@ -46,7 +46,7 @@ export default class MainSection extends Component {
         <input className="toggle-all"
                type="checkbox"
                checked={completedCount === todos.length}
-               //onChange={actions.completeAll} />               
+               //onChange={actions.completeAll} />
                onChange={() => actions.completeAll(todos.filter(e => !e.completed).map(e => e.id))} />
       )
     }
@@ -62,7 +62,7 @@ export default class MainSection extends Component {
         <Footer completedCount={completedCount}
                 activeCount={activeCount}
                 filter={filter}
-                //onClearCompleted={this.handleClearCompleted}                
+                //onClearCompleted={this.handleClearCompleted}
                 onClearCompleted={() => this.handleClearCompleted(todos.filter(e => e.completed).map(e => e.id))}
                 onShow={this.handleShow} />
       )
@@ -72,7 +72,7 @@ export default class MainSection extends Component {
   render() {
     const { todos, actions } = this.props
     const { filter } = this.state
-    
+
     const filteredTodos = todos.filter(TODO_FILTERS[filter])
     const completedCount = todos.reduce((count, todo) =>
       todo.completed ? count + 1 : count,
@@ -88,7 +88,8 @@ export default class MainSection extends Component {
           )}
         </ul>
         {this.renderFooter(completedCount)}
+        <button onClick={() => this.props.actions.getTodos()}>Refresh</button>
       </section>
     )
   }
-}
+
