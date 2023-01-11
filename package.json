@@ -14,7 +14,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "knex": "^0.18.2",
+    "knex": "^2.4.0",
     "pg": "^7.11.0"
   },
   "scripts": {
